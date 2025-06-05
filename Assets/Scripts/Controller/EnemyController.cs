@@ -1,47 +1,62 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
 
-    [SerializeField] float m_health = 20f;
+    [SerializeField] int m_health = 1;
+    [SerializeField] float speed = 3f; // velocidad de movimiento del enemigo
+    [SerializeField] float minDistanceToFollow = 20f; // distancia minima para seguir al jugador	   
+    [SerializeField] int damageAmount = 1; // cantidad de danio que hace al jugador
 
     [SerializeField] protected Transform target; // para obtener posicion del player
-   
-    [SerializeField] int damageAmount = 1; // cantidad de danio que hace al jugador
     public float cooldownTime = 3f; // Tiempo de cooldown para volver a hacer daño
-    private float lastAttackTime;
-    protected NavMeshAgent navMeshAgent;
+    NavMeshAgent navMeshAgent;
+    Vector3 startPosition;
 
-    protected void Start()
+
+    void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.enabled = true;
+        startPosition = transform.position;//transform.LookAt(startPosition);
+
     }
 
-    protected void Update()
+    void Update()
     {
-        if(m_health > 0){
+        if (isClose())
+        {
             navMeshAgent.SetDestination(target.position);
-        }else{
-            Destroy(gameObject, 3f);
+        }
+        else
+        {
+            navMeshAgent.ResetPath(); // Detener el movimiento si no esta cerca
+            transform.position = Vector3.MoveTowards(transform.position, startPosition, speed * Time.deltaTime);
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         m_health -= damage;
-        if(m_health <= 0){
-            Death(); 
+        if (m_health <= 0)
+        {
+            Death();
         }
     }
 
     void Death()
     {
         //TODO Agregar animacion de muerte
-
         navMeshAgent.enabled = false;
-        Destroy(gameObject, 3f);
+        Destroy(gameObject, 1f);
+    }
+
+    bool isClose()
+    {
+        float distance = Vector3.Distance(transform.position, target.position);
+        return distance < minDistanceToFollow;
     }
 
     void OnTriggerEnter(Collider other)
@@ -49,13 +64,10 @@ public class EnemyController : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             PlayerController player = other.GetComponent<PlayerController>();
-
-            //TODO logica de danio al jugador
-            /*if(Time.time >= lastAttackTime + cooldownTime && !player.IsDeath && this.m_health > 0)
-            {
-                lastAttackTime = Time.time;
-                player.TakeDamage(damageAmount);
-            }*/
+            Debug.Log("Enemigo ha lastimado al jugador");
+            player.TakeDamage(damageAmount);
         }
     }
+
+  
 }

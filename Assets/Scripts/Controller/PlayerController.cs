@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float velocidad = 11f;
-    public float fuerzaSalto = 7.5f;
+    [SerializeField] float velocidad = 8f;
+    [SerializeField] float fuerzaSalto = 7.5f;
 
-    public float gravedadCaida = 5f; // M�s gravedad al caer
-    public float gravedadBajada = 3f; // Menos gravedad si se suelta el salto
+    [SerializeField] float health = 3f;
 
-    public Transform camara;
+    [SerializeField] float gravedadCaida = 5f; // Mas gravedad al caer
+    [SerializeField] float gravedadBajada = 3f; // Menos gravedad si se suelta el salto
+
+    [SerializeField] Transform camara;
 
     private Rigidbody rb;
     private bool enSuelo;
@@ -53,7 +55,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector3.up * Physics.gravity.y * (gravedadCaida - 1), ForceMode.Acceleration);
         }
-        else if (rb.velocity.y > 0 && !Input.GetButton("Jump")) // subiendo pero solt� el salto
+        else if (rb.velocity.y > 0 && !Input.GetButton("Jump")) // subiendo pero solto el salto
         {
             rb.AddForce(Vector3.up * Physics.gravity.y * (gravedadBajada - 1), ForceMode.Acceleration);
         }
@@ -65,6 +67,33 @@ public class PlayerController : MonoBehaviour
         {
             enSuelo = true;
         }
+    }
+
+    void OnTriggerEnter(Collider other) 
+    {
+          if (other.gameObject.CompareTag("Enemy")) // TODO: Refactor con patron strategy 
+          {
+              EnemyController enemy = other.GetComponent<EnemyController>();
+              Debug.Log("Jugador ha atacado al enemigo.");
+              enemy.TakeDamage(1); 
+          }
+    }
+
+    public void TakeDamage(int damage) // TODO luego cambia a float para tener valores entre 0 y 1
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Death();
+        }
+    }
+
+    void Death()
+    {
+        // Todo Animacion de muerte
+
+        Debug.Log("Jugador ha muerto...");
+        Destroy(gameObject, 2f); 
     }
 
 }
