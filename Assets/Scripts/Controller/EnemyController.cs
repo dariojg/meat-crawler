@@ -26,7 +26,7 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        if (isClose())
+        if (IsClose())
         {
             navMeshAgent.SetDestination(target.position);
         }
@@ -53,7 +53,7 @@ public class EnemyController : MonoBehaviour
         Destroy(gameObject, 1f);
     }
 
-    bool isClose()
+    bool IsClose()
     {
         float distance = Vector3.Distance(transform.position, target.position);
         return distance < minDistanceToFollow;
