@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Suelo
+  - Boton
+  - Porton
+  - Enemy
   layers:
   - Default
   - TransparentFX
