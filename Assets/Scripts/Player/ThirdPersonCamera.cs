@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ThirdPersonCamera : MonoBehaviour
@@ -9,8 +7,8 @@ public class ThirdPersonCamera : MonoBehaviour
     public float height = 2f;
     public float sensitivity = 5f;
 
-    public float minVerticalAngle = -45f; // Límite inferior (mirar abajo)
-    public float maxVerticalAngle = 45f;  // Límite superior (mirar arriba)
+    public float minVerticalAngle = -45f; // Limite inferior (mirar abajo)
+    public float maxVerticalAngle = 45f;  // Limite superior (mirar arriba)
 
     private float mouseX;
     private float mouseY;
@@ -22,9 +20,9 @@ public class ThirdPersonCamera : MonoBehaviour
             return;
         }
 
-        mouseY += Input.GetAxis("Mouse X") * sensitivity;    // Rotación horizontal
-        mouseX -= Input.GetAxis("Mouse Y") * sensitivity;    // Rotación vertical (invertida como es usual)
-        mouseX = Mathf.Clamp(mouseX, minVerticalAngle, maxVerticalAngle); // Limita la rotación vertical
+        mouseY += Input.GetAxis("Mouse X") * sensitivity;    // Rotaciï¿½n horizontal
+        mouseX -= Input.GetAxis("Mouse Y") * sensitivity;    // Rotaciï¿½n vertical (invertida como es usual)
+        mouseX = Mathf.Clamp(mouseX, minVerticalAngle, maxVerticalAngle); // Limita la rotaciï¿½n vertical
 
         Quaternion rotation = Quaternion.Euler(mouseX, mouseY, 0);
         Vector3 offset = rotation * new Vector3(0, height, -distance);

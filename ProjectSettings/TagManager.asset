@@ -7,6 +7,7 @@ TagManager:
   - Suelo
   - Boton
   - Porton
+  - Enemy
   layers:
   - Default
   - TransparentFX

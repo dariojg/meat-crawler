@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -7,7 +5,7 @@ public class PlayerController : MonoBehaviour
     public float velocidad = 11f;
     public float fuerzaSalto = 7.5f;
 
-    public float gravedadCaida = 5f; // Más gravedad al caer
+    public float gravedadCaida = 5f; // Mï¿½s gravedad al caer
     public float gravedadBajada = 3f; // Menos gravedad si se suelta el salto
 
     public Transform camara;
@@ -55,7 +53,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector3.up * Physics.gravity.y * (gravedadCaida - 1), ForceMode.Acceleration);
         }
-        else if (rb.velocity.y > 0 && !Input.GetButton("Jump")) // subiendo pero soltó el salto
+        else if (rb.velocity.y > 0 && !Input.GetButton("Jump")) // subiendo pero soltï¿½ el salto
         {
             rb.AddForce(Vector3.up * Physics.gravity.y * (gravedadBajada - 1), ForceMode.Acceleration);
         }
@@ -68,4 +66,5 @@ public class PlayerController : MonoBehaviour
             enSuelo = true;
         }
     }
+
 }
