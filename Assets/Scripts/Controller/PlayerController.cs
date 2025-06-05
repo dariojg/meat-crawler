@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float velocidad = 10f;
-    public float fuerzaSalto = 5f;
+    public float velocidad = 11f;
+    public float fuerzaSalto = 7.5f;
+
+    public float gravedadCaida = 5f; // Más gravedad al caer
+    public float gravedadBajada = 3f; // Menos gravedad si se suelta el salto
 
     public Transform camara;
 
     private Rigidbody rb;
     private bool enSuelo;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -34,14 +38,27 @@ public class PlayerController : MonoBehaviour
             rb.MovePosition(nuevaPosicion);
 
             Quaternion rotacionDeseada = Quaternion.LookRotation(direccionCamara);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotacionDeseada, Time.deltaTime * 10f); 
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotacionDeseada, Time.deltaTime * 10f);
         }
 
         if (Input.GetButtonDown("Jump") && enSuelo)
-            {
-                rb.AddForce(Vector3.up * fuerzaSalto, ForceMode.Impulse);
-                enSuelo = false;
-            }
+        {
+            rb.AddForce(Vector3.up * fuerzaSalto, ForceMode.Impulse);
+            enSuelo = false;
+        }
+    }
+
+    void FixedUpdate()
+    {
+        // Gravedad mejorada
+        if (rb.velocity.y < 0) // cayendo
+        {
+            rb.AddForce(Vector3.up * Physics.gravity.y * (gravedadCaida - 1), ForceMode.Acceleration);
+        }
+        else if (rb.velocity.y > 0 && !Input.GetButton("Jump")) // subiendo pero soltó el salto
+        {
+            rb.AddForce(Vector3.up * Physics.gravity.y * (gravedadBajada - 1), ForceMode.Acceleration);
+        }
     }
 
     void OnCollisionEnter(Collision collision)
