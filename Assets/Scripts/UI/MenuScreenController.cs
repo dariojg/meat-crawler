@@ -8,9 +8,14 @@ public class MenuScreenController : MonoBehaviour
         SceneManager.LoadScene("MainScene"); 
     }
 
+    public void MenuGame()
+    {
+        SceneManager.LoadScene("MenuScreen"); 
+    }
+
     public void QuitGame()
     {
-        Debug.Log("Salir del juego"); // Esto solo deberia funcionar si buildeamos
+        Debug.Log("Salir del juego");
         Application.Quit();
     }
 }

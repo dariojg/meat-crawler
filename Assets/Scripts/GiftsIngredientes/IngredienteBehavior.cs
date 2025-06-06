@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class IngredienteBehavior : MonoBehaviour
 {
@@ -28,7 +27,7 @@ public class IngredienteBehavior : MonoBehaviour
 
             // TODO: Lanzar evento o notificar al jugador que el ingrediente ha sido recogido
             
-            // TODO: Lanzar pantalla de Victoria (solo en prototipo)
+            SceneManager.LoadScene("VictoryScreen");
         }
     }
 }
