@@ -20,20 +20,20 @@ public class EnemyController : MonoBehaviour
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.enabled = true;
-        startPosition = transform.position;//transform.LookAt(startPosition);
-
+        startPosition = transform.position;
     }
 
     void Update()
     {
-        if (IsClose())
-        {
-            navMeshAgent.SetDestination(target.position);
-        }
-        else
-        {
-            navMeshAgent.ResetPath(); // Detener el movimiento si no esta cerca
-            transform.position = Vector3.MoveTowards(transform.position, startPosition, speed * Time.deltaTime);
+        if (m_health > 0){
+            if (IsClose())
+            {
+                navMeshAgent.SetDestination(target.position);
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, startPosition, speed * Time.deltaTime);
+            }
         }
     }
 
@@ -49,6 +49,7 @@ public class EnemyController : MonoBehaviour
     void Death()
     {
         //TODO Agregar animacion de muerte
+        navMeshAgent.ResetPath();
         navMeshAgent.enabled = false;
         Destroy(gameObject, 1f);
     }
