@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BotonInteractivo : MonoBehaviour
 {
-    private static int botonesActivados = 0;
-    private static int totalBotones = 2;
     private bool activado = false;
     private bool jugadorEnRango = false;
 
@@ -13,31 +9,15 @@ public class BotonInteractivo : MonoBehaviour
     {
         if (jugadorEnRango && !activado && Input.GetKeyDown(KeyCode.F))
         {
+            Debug.Log("Jugador en rango y activado");
             activado = true;
-            botonesActivados++;
-
-            if (botonesActivados < totalBotones)
-            {
-                Debug.Log("Activaste 1 boton. Falta otro");
-            }
-            else
-            {
-                Debug.Log("Activaste todos los botones");
-            }
-            if (botonesActivados == totalBotones)
-            {
-                GameObject porton = GameObject.FindGameObjectWithTag("Porton");
-                if (porton != null)
-                {
-                    Destroy(porton);
-                    Debug.Log("Puerta abierta. A por el ultimo ingrediente");
-                }
-            }
+            PuzzlesController.Instance.PuzzlesResolved();
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Jugador ha entrado en el rango del botón.");
         if (other.CompareTag("Player"))
         {
             jugadorEnRango = true;
