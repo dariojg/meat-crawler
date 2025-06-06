@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -95,7 +96,8 @@ public class PlayerController : MonoBehaviour
         // Todo Animacion de muerte
 
         Debug.Log("Jugador ha muerto...");
-        Destroy(gameObject, 2f); 
+        Destroy(gameObject, 2f);
+        SceneManager.LoadScene("GameOverScreen");
     }
 
 }
