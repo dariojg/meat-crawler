@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TrampaDisparo : MonoBehaviour
@@ -7,7 +5,7 @@ public class TrampaDisparo : MonoBehaviour
     public GameObject proyectilPrefab;
     public Transform puntoDisparo;
     public float velocidad = 10f;
-    public float intervaloDisparo = 5f;
+    public float intervaloDisparo = 1f;
 
     public void Start()
     {

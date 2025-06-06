@@ -1,33 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
-using Cinemachine.Utility;
 using UnityEngine;
 
 public class Proyectil : MonoBehaviour
 {
     public float velocidad = 10f;
     public float tiempoVida = 2f;
-    public float damage = 1f;
+    public int damage = 2;
 
     void Start()
     {
         Destroy(gameObject, tiempoVida);
     }
 
-    private void OnTriggerEnter(Collider collision)
+    void OnCollisionEnter(Collision collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            PlayerSalud saludJugador = collision.GetComponent<PlayerSalud>();
-
-            if (saludJugador != null)
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+            if (player != null)
             {
-                saludJugador.vida -= damage;
-
-                if (saludJugador.vida <= 0)
-                {
-                    Destroy(collision.gameObject);
-                }
+                player.TakeDamage(damage);
             }
             Destroy(gameObject);
         }

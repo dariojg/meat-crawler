@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] float velocidad = 8f;
     [SerializeField] float jumpingForce = 60f;
-    [SerializeField] float health = 3f;
+    [SerializeField] int health = 3;
     [SerializeField] float gravedadCaida = 5f; // Mas gravedad al caer
     [SerializeField] float gravedadBajada = 3f; // Menos gravedad si se suelta el salto
     [SerializeField] Transform camara;
