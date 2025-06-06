@@ -5,7 +5,7 @@ public class TrampaDisparo : MonoBehaviour
     public GameObject proyectilPrefab;
     public Transform puntoDisparo;
     public float velocidad = 10f;
-    public float intervaloDisparo = 1f;
+    public float intervaloDisparo = 3f;
 
     public void Start()
     {
