@@ -3,13 +3,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float velocidad = 8f;
-    [SerializeField] float fuerzaSalto = 7.5f;
-
+    [SerializeField] float jumpingForce = 60f;
     [SerializeField] float health = 3f;
-
     [SerializeField] float gravedadCaida = 5f; // Mas gravedad al caer
     [SerializeField] float gravedadBajada = 3f; // Menos gravedad si se suelta el salto
-
     [SerializeField] Transform camara;
 
     private Rigidbody rb;
@@ -43,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && enSuelo)
         {
-            rb.AddForce(Vector3.up * fuerzaSalto, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * jumpingForce, ForceMode.Impulse);
             enSuelo = false;
         }
     }
@@ -67,17 +64,22 @@ public class PlayerController : MonoBehaviour
         {
             enSuelo = true;
         }
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if (collision.gameObject.TryGetComponent<EnemyController>(out var enemy))
+            {
+                bool isUpCollision = !enSuelo && (transform.position.y > enemy.transform.position.y);
+                if (isUpCollision)
+                {
+                    Debug.Log("Jugador ha golpeado al enemigo.");
+                    enemy.TakeDamage(1);
+                    rb.AddForce(Vector3.up * jumpingForce, ForceMode.Impulse); // Rebote al golpear
+                }
+            }
+        }
     }
 
-    void OnTriggerEnter(Collider other) 
-    {
-          if (other.gameObject.CompareTag("Enemy")) // TODO: Refactor con patron strategy 
-          {
-              EnemyController enemy = other.GetComponent<EnemyController>();
-              Debug.Log("Jugador ha atacado al enemigo.");
-              enemy.TakeDamage(1); 
-          }
-    }
 
     public void TakeDamage(int damage) // TODO luego cambia a float para tener valores entre 0 y 1
     {
