@@ -5,7 +5,7 @@ public class PuzzlesController : MonoBehaviour
     private static PuzzlesController instance;
     public static PuzzlesController Instance => instance;
 
-    [SerializeField]int totalPuzzles = 1;
+    [SerializeField]int totalPuzzles = 2;
 
     [SerializeField] Porton door;
 
