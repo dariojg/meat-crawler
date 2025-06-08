@@ -5,8 +5,9 @@ public class PuzzlesController : MonoBehaviour
     private static PuzzlesController instance;
     public static PuzzlesController Instance => instance;
 
-    [SerializeField]int totalPuzzles = 2;
+    [SerializeField]int totalPuzzles = 0;
 
+    [SerializeField] Puzzle[] puzzles;
     [SerializeField] Porton door;
 
     void Awake()
@@ -30,15 +31,15 @@ public class PuzzlesController : MonoBehaviour
 
     public void PuzzlesResolved()
     {
-        totalPuzzles--;
-        if(totalPuzzles <= 0)
+        totalPuzzles++;
+        if(totalPuzzles >= puzzles.Length)
         {
             OpenDoor();
             Debug.Log("Todos los puzzles resueltos. Puerta abierta.");
         }
         else
         {
-            Debug.Log($"Puzzles restantes: {totalPuzzles}");
+            Debug.Log($"Puzzles restantes: {puzzles.Length}");
         }
     }
 
