@@ -8,6 +8,7 @@ TagManager:
   - Boton
   - Porton
   - Enemy
+  - Pescado
   layers:
   - Default
   - TransparentFX
