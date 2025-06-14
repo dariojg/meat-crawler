@@ -12,10 +12,11 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
     private bool enSuelo;
-
+    private Animator animator;  // linea agregada para animacion
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>(); // linea agregada busca el animator del modelo del personaje
     }
 
     void Update()
@@ -24,6 +25,10 @@ public class PlayerController : MonoBehaviour
         float movimientoVertical = Input.GetAxis("Vertical");
 
         Vector3 movimiento = new Vector3(movimientoHorizontal, 0f, movimientoVertical).normalized;
+
+        bool estaCorriendo = Input.GetKey(KeyCode.LeftShift) && movimiento.magnitude >= 0.1f;///////
+
+        float velocidadActual = estaCorriendo ? velocidad * 1.7f : velocidad;///////
 
         if (movimiento.magnitude >= 0.1f)
         {
@@ -39,11 +44,18 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, rotacionDeseada, Time.deltaTime * 10f);
         }
 
+
+
         if (Input.GetButtonDown("Jump") && enSuelo)
         {
             rb.AddForce(Vector3.up * jumpingForce, ForceMode.Impulse);
             enSuelo = false;
+            animator.SetBool("isJumping", true); // animacion de salto
         }
+
+        float velocidadAnimacion = new Vector2(movimientoHorizontal, movimientoVertical).magnitude; //
+        animator.SetFloat("Speed", velocidadAnimacion); //lineas agregadas por animacion
+        animator.SetBool("isRunning", estaCorriendo);/////////////////
     }
 
     void FixedUpdate()
@@ -64,6 +76,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Suelo"))
         {
             enSuelo = true;
+            animator.SetBool("isJumping", false); // la animacion de salto termina y vuelve la de idle
         }
 
         if (collision.gameObject.CompareTag("Enemy"))
