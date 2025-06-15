@@ -8,6 +8,7 @@ TagManager:
   - Boton
   - Porton
   - Enemy
+  - Collectable
   layers:
   - Default
   - TransparentFX
