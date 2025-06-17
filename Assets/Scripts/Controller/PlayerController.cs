@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-           
+
         float movimientoHorizontal = Input.GetAxis("Horizontal");
         float movimientoVertical = Input.GetAxis("Vertical");
 
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger("Interact");
             ;
         }
-      
+
 
         Vector3 movimiento = new Vector3(movimientoHorizontal, 0f, movimientoVertical).normalized;
 
@@ -66,9 +66,10 @@ public class PlayerController : MonoBehaviour
         }
 
         float velocidadAnimacion = new Vector2(movimientoHorizontal, movimientoVertical).magnitude; //linea agregadas por animacion
-        animator.SetFloat("Speed", velocidadAnimacion); 
+        animator.SetFloat("Speed", velocidadAnimacion);
         animator.SetBool("isRunning", estaCorriendo);
-
+    }
+    
     void FixedUpdate()
     {
         // Gravedad mejorada
