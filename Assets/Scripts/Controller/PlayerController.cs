@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,18 +13,34 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
     private bool enSuelo;
+    private Animator animator;  // linea agregada para animacion
 
+    
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>(); // linea agregada busca el animator del modelo del personaje
     }
 
     void Update()
     {
+
+
         float movimientoHorizontal = Input.GetAxis("Horizontal");
         float movimientoVertical = Input.GetAxis("Vertical");
 
+        if (Input.GetKeyDown(KeyCode.E)) // Animacion de recolectar Items
+        {
+            animator.SetTrigger("Interact");
+            ;
+        }
+
+
         Vector3 movimiento = new Vector3(movimientoHorizontal, 0f, movimientoVertical).normalized;
+
+        bool estaCorriendo = Input.GetKey(KeyCode.LeftShift) && movimiento.magnitude >= 0.1f;// animacion de correr
+
+        float velocidadActual = estaCorriendo ? velocidad * 1.7f : velocidad;//valor de velocidad al correr
 
         if (movimiento.magnitude >= 0.1f)
         {
@@ -39,13 +56,20 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, rotacionDeseada, Time.deltaTime * 10f);
         }
 
+
+
         if (Input.GetButtonDown("Jump") && enSuelo)
         {
             rb.AddForce(Vector3.up * jumpingForce, ForceMode.Impulse);
             enSuelo = false;
+            animator.SetBool("isJumping", true); // animacion de salto
         }
-    }
 
+        float velocidadAnimacion = new Vector2(movimientoHorizontal, movimientoVertical).magnitude; //linea agregadas por animacion
+        animator.SetFloat("Speed", velocidadAnimacion);
+        animator.SetBool("isRunning", estaCorriendo);
+    }
+    
     void FixedUpdate()
     {
         // Gravedad mejorada
@@ -64,6 +88,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Suelo"))
         {
             enSuelo = true;
+            animator.SetBool("isJumping", false); // la animacion de salto termina y vuelve la de idle
         }
 
         if (collision.gameObject.CompareTag("Enemy"))
@@ -93,11 +118,24 @@ public class PlayerController : MonoBehaviour
 
     void Death()
     {
-        // Todo Animacion de muerte
+        animator.SetTrigger("Death"); // Todo Animacion de muerte
 
-        Debug.Log("Jugador ha muerto...");
-        Destroy(gameObject, 2f);
+        rb.velocity = Vector3.zero;
+        rb.isKinematic = true;
+        GetComponent<Collider>().enabled = false;
+        this.enabled = false;
+
+        Invoke("CargaGameOver", 5f);
+       //Debug.Log("Jugador ha muerto...");
+      //  Destroy(gameObject, 2f);
+      // SceneManager.LoadScene("GameOverScreen");
+    }
+
+
+    void CargaGameOver()
+    {
         SceneManager.LoadScene("GameOverScreen");
     }
 
+  
 }

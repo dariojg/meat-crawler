@@ -2,6 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class EnemyController : MonoBehaviour
 {
 
@@ -15,12 +16,17 @@ public class EnemyController : MonoBehaviour
     NavMeshAgent navMeshAgent;
     Vector3 startPosition;
 
+    float lastAttackTime = -Mathf.Infinity;
+
+
+    Animator animator;
 
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.enabled = true;
         startPosition = transform.position;
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -29,10 +35,12 @@ public class EnemyController : MonoBehaviour
             if (IsClose())
             {
                 navMeshAgent.SetDestination(target.position);
+                animator.SetBool("isWalking", true);
             }
             else
             {
                 transform.position = Vector3.MoveTowards(transform.position, startPosition, speed * Time.deltaTime);
+                animator.SetBool("isWalking", false);
             }
         }
     }
@@ -49,9 +57,12 @@ public class EnemyController : MonoBehaviour
     void Death()
     {
         //TODO Agregar animacion de muerte
-        navMeshAgent.ResetPath();
-        navMeshAgent.enabled = false;
-        Destroy(gameObject, 1f);
+         animator.SetTrigger("die");
+         navMeshAgent.ResetPath();
+          navMeshAgent.enabled = false;      
+        Destroy(gameObject, 5f);
+
+        
     }
 
     bool IsClose()
@@ -60,15 +71,23 @@ public class EnemyController : MonoBehaviour
         return distance < minDistanceToFollow;
     }
 
-    void OnTriggerEnter(Collider other)
+    //void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            PlayerController player = other.GetComponent<PlayerController>();
-            Debug.Log("Enemigo ha lastimado al jugador");
-            player.TakeDamage(damageAmount);
+            if (Time.time >= lastAttackTime + cooldownTime)
+            {
+                lastAttackTime = Time.time; // ataca de nuevo
+
+                animator.SetTrigger("attack"); // animacion de ataque
+
+                PlayerController player = other.GetComponent<PlayerController>();
+                Debug.Log("Enemigo ha lastimado al jugador");
+                player.TakeDamage(damageAmount);
+            }
         }
     }
+   
 
-  
 }
