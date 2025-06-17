@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 3899765491151472845}
   - component: {fileID: 259103575836376392}
   - component: {fileID: 1557121036730518603}
-  - component: {fileID: 3493233184560292096}
   - component: {fileID: -8326595382671346534}
+  - component: {fileID: 3961274062897178135}
   m_Layer: 0
-  m_Name: salPrefab
+  m_Name: SalPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,18 +107,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3493233184560292096
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4943386364116050043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c925b38ed8f9df945b66315e47e2777b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &-8326595382671346534
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -146,3 +134,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3961274062897178135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4943386364116050043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43b741a1d1fbff441a279782c7027384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCollectable: 0
+  itemData: {fileID: 11400000, guid: 7525b4d4710017144bb3a0b3f7086862, type: 2}
