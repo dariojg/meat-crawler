@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BotonInteractivo : MonoBehaviour
+public class BotonInteractivo : Puzzle
 {
     private bool activado = false;
     private bool jugadorEnRango = false;
@@ -11,7 +11,7 @@ public class BotonInteractivo : MonoBehaviour
         {
             Debug.Log("Jugador en rango y activado");
             activado = true;
-            PuzzlesController.Instance.PuzzlesResolved();
+            NotifyPuzzelResolved();
         }
     }
 
