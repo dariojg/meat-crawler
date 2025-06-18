@@ -6,10 +6,10 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
 
-    [SerializeField] int m_health = 1;
+    [SerializeField] float m_health = 1f;
     [SerializeField] float speed = 3f; // velocidad de movimiento del enemigo
     [SerializeField] float minDistanceToFollow = 20f; // distancia minima para seguir al jugador	   
-    [SerializeField] int damageAmount = 1; // cantidad de danio que hace al jugador
+    [SerializeField] float damageAmount = 0.2f; // cantidad de danio que hace al jugador
 
     [SerializeField] protected Transform target; // para obtener posicion del player
     public float cooldownTime = 3f; // Tiempo de cooldown para volver a hacer daño
@@ -45,7 +45,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         m_health -= damage;
         if (m_health <= 0)

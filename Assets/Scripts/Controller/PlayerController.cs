@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] float velocidad = 8f;
     [SerializeField] float jumpingForce = 60f;
-    [SerializeField] int health = 3;
+    [SerializeField] float health = 1;
     [SerializeField] float gravedadCaida = 5f; // Mas gravedad al caer
     [SerializeField] float gravedadBajada = 3f; // Menos gravedad si se suelta el salto
     [SerializeField] Transform camara;
@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
                 if (isUpCollision)
                 {
                     Debug.Log("Jugador ha golpeado al enemigo.");
-                    enemy.TakeDamage(1);
+                    enemy.TakeDamage(0.5f);
                     rb.AddForce(Vector3.up * jumpingForce, ForceMode.Impulse); // Rebote al golpear
                 }
             }
@@ -107,9 +107,10 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void TakeDamage(int damage) // TODO luego cambia a float para tener valores entre 0 y 1
+    public void TakeDamage(float damage) // TODO luego cambia a float para tener valores entre 0 y 1
     {
         health -= damage;
+        GameManager.Instance.UpdateDamageUI(health, damage); // Actualiza la UI de salud
         if (health <= 0)
         {
             Death();
@@ -126,9 +127,6 @@ public class PlayerController : MonoBehaviour
         this.enabled = false;
 
         Invoke("CargaGameOver", 5f);
-       //Debug.Log("Jugador ha muerto...");
-      //  Destroy(gameObject, 2f);
-      // SceneManager.LoadScene("GameOverScreen");
     }
 
 
