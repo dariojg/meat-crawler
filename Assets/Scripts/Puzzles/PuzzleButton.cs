@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PuzzleButton : MonoBehaviour
+public class PuzzleButton : Puzzle
 {
     public enum ButtonColor { Red, Yellow, Green }
 

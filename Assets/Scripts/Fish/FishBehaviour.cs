@@ -16,24 +16,12 @@ public class FishBehaviour : MonoBehaviour
 
         if (rb != null && !launched)
         {
-            
             rb.AddForce(Vector3.up * force, ForceMode.Impulse);
             launched = true;
         }
         else if (rb == null)
         {
             Debug.LogWarning("El pescado necesita un Rigidbody.");
-        }
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("Entró en trigger con: " + other.name);
-
-        if (other.CompareTag(playerTag))
-        {
-            Debug.Log("Pez recogido por el jugador");
-            Destroy(gameObject);
         }
     }
 }

@@ -13,10 +13,12 @@ GameObject:
   - component: {fileID: 7680722268432162173}
   - component: {fileID: 6329113507555427543}
   - component: {fileID: 1330302410061774900}
+  - component: {fileID: 144106314348852419}
   - component: {fileID: 7769132251089682673}
+  - component: {fileID: -7897386861291917396}
   m_Layer: 0
   m_Name: Fish
-  m_TagString: Pescado
+  m_TagString: Collectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,8 +134,31 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0000002, y: 1, z: 1.0000004}
+  m_Size: {x: 1.52, y: 2.21, z: 1.65}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &144106314348852419
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5014302104142893307}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.53
+  m_Height: 2.57
+  m_Direction: 1
+  m_Center: {x: 0.00000005960465, y: -0.13, z: -0.00000008940698}
 --- !u!114 &7769132251089682673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,3 +173,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 10
   playerTag: Player
+--- !u!114 &-7897386861291917396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5014302104142893307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43b741a1d1fbff441a279782c7027384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCollectable: 1
+  itemData: {fileID: 11400000, guid: 8ca49723fabeb5345b0c8ea82d730c90, type: 2}
